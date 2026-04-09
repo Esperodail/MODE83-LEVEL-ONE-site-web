@@ -41,12 +41,12 @@ const GAMES: Game[] = [
 ];
 
 const VIDEOS: Video[] = [
-  { id: '1', title: 'Showcase 1', url: 'https://www.youtube.com/embed/O8dlW8E0kBs', thumbnail: 'https://img.youtube.com/vi/O8dlW8E0kBs/maxresdefault.jpg' },
-  { id: '2', title: 'Showcase 2', url: 'https://www.youtube.com/embed/b_UE47U9Il8', thumbnail: 'https://img.youtube.com/vi/b_UE47U9Il8/maxresdefault.jpg' },
-  { id: '3', title: 'Showcase 3', url: 'https://www.youtube.com/embed/biRS_GETd2I', thumbnail: 'https://img.youtube.com/vi/biRS_GETd2I/maxresdefault.jpg' },
-  { id: '4', title: 'Showcase 4', url: 'https://www.youtube.com/embed/d1MK0YTS6L8', thumbnail: 'https://img.youtube.com/vi/d1MK0YTS6L8/maxresdefault.jpg' },
-  { id: '5', title: 'Showcase 5', url: 'https://www.youtube.com/embed/6c5wjtEk5N4', thumbnail: 'https://img.youtube.com/vi/6c5wjtEk5N4/maxresdefault.jpg' },
-  { id: '6', title: 'Showcase 6', url: 'https://www.youtube.com/embed/oozvQz6O8Ek', thumbnail: 'https://img.youtube.com/vi/oozvQz6O8Ek/maxresdefault.jpg' },
+  { id: '1', title: 'Gameplay Showcase', url: 'https://www.youtube.com/embed/O8dlW8E0kBs', thumbnail: 'https://img.youtube.com/vi/O8dlW8E0kBs/maxresdefault.jpg' },
+  { id: '2', title: 'Level Design Preview', url: 'https://www.youtube.com/embed/b_UE47U9Il8', thumbnail: 'https://img.youtube.com/vi/b_UE47U9Il8/maxresdefault.jpg' },
+  { id: '3', title: 'Mechanics Breakdown', url: 'https://www.youtube.com/embed/biRS_GETd2I', thumbnail: 'https://img.youtube.com/vi/biRS_GETd2I/maxresdefault.jpg' },
+  { id: '4', title: 'Atmosphere & Sound', url: 'https://www.youtube.com/embed/d1MK0YTS6L8', thumbnail: 'https://img.youtube.com/vi/d1MK0YTS6L8/maxresdefault.jpg' },
+  { id: '5', title: 'Character Reveal', url: 'https://www.youtube.com/embed/6c5wjtEk5N4', thumbnail: 'https://img.youtube.com/vi/6c5wjtEk5N4/maxresdefault.jpg' },
+  { id: '6', title: 'Final Trailer', url: 'https://www.youtube.com/embed/oozvQz6O8Ek', thumbnail: 'https://img.youtube.com/vi/oozvQz6O8Ek/maxresdefault.jpg' },
 ];
 
 const FORMATION_MODULES = [
@@ -99,12 +99,16 @@ const VideoCard: React.FC<{ video: Video; onSelect: (v: Video) => void }> = ({ v
 
   return (
     <motion.div
-      className="relative aspect-video rounded-2xl overflow-hidden border border-white/10 group cursor-pointer bg-black"
-      whileHover={{ y: -10 }}
+      className="relative aspect-video rounded-xl overflow-hidden border border-white/5 group cursor-pointer bg-[#0a0a0f]"
+      whileHover={{ y: -5 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => onSelect(video)}
+      data-hover="true"
     >
+      {/* Cinematic Scanlines Overlay */}
+      <div className="absolute inset-0 pointer-events-none z-10 opacity-20 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]" />
+      
       <AnimatePresence mode="wait">
         {!isHovered ? (
           <motion.div
@@ -118,11 +122,25 @@ const VideoCard: React.FC<{ video: Video; onSelect: (v: Video) => void }> = ({ v
               src={video.thumbnail} 
               alt={video.title} 
               referrerPolicy="no-referrer"
-              className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity" 
+              className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-all duration-700 group-hover:scale-110" 
             />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Play className="w-8 h-8 fill-white" />
+            
+            {/* Top Badge */}
+            <div className="absolute top-4 left-4 flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+              <span className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-white/70">Showcase</span>
+            </div>
+
+            {/* Bottom Info */}
+            <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black via-black/40 to-transparent">
+              <div className="flex items-end justify-between">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-mono text-[#a8fbd3] tracking-widest uppercase opacity-70">Video ID: {video.id.padStart(2, '0')}</span>
+                  <h3 className="text-lg font-heading font-bold uppercase tracking-tight leading-none">{video.title}</h3>
+                </div>
+                <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-[#a8fbd3] group-hover:border-[#a8fbd3] transition-all duration-300">
+                  <Play className="w-4 h-4 fill-current text-white group-hover:text-black ml-1" />
+                </div>
               </div>
             </div>
           </motion.div>
@@ -140,12 +158,15 @@ const VideoCard: React.FC<{ video: Video; onSelect: (v: Video) => void }> = ({ v
               allow="autoplay"
               frameBorder="0"
             />
+            <div className="absolute inset-0 bg-black/20" />
+            <div className="absolute bottom-4 right-4">
+               <div className="px-3 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded-full text-[10px] font-mono text-white tracking-widest uppercase">
+                 Preview Mode
+               </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
-      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-        <p className="text-sm font-bold truncate">{video.title}</p>
-      </div>
     </motion.div>
   );
 };
@@ -203,15 +224,14 @@ const App: React.FC = () => {
       <FluidBackground />
       
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 md:px-8 py-6 mix-blend-difference">
-        <div className="flex items-center gap-3 z-50">
+      <nav className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 md:px-8 py-6">
+        <div className="flex items-center z-50">
           <img 
             src="https://lh3.googleusercontent.com/d/1AjdM_2CVU0laEZ0pENx_ar0SQpMqMm49" 
             alt="MODE83 Logo" 
-            className="h-10 md:h-12 w-auto object-contain brightness-0 invert"
+            className="h-10 md:h-12 w-auto object-contain"
             referrerPolicy="no-referrer"
           />
-          <div className="font-heading text-xl md:text-2xl font-bold tracking-tighter text-white cursor-default">MODE83</div>
         </div>
         
         {/* Desktop Menu */}
@@ -488,6 +508,14 @@ const App: React.FC = () => {
               <img 
                 src="https://lh3.googleusercontent.com/d/1f0KliWtwc8uKrDXmQrreu6HVdGqVGwNi" 
                 alt="France Travail" 
+                className="h-12 md:h-16 w-auto object-contain"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            <div className="flex items-center gap-4 grayscale hover:grayscale-0 transition-all">
+              <img 
+                src="https://lh3.googleusercontent.com/d/1N70vknLRrSRuWup2f3VwE2T2kyJQ-C4O" 
+                alt="Union Européenne" 
                 className="h-12 md:h-16 w-auto object-contain"
                 referrerPolicy="no-referrer"
               />
