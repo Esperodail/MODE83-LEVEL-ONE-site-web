@@ -18,7 +18,7 @@ const GAMES: Game[] = [
     id: '1', 
     name: "Dragys's Island", 
     developer: 'inklink83', 
-    image: 'https://picsum.photos/id/169/800/600',
+    image: 'input_file_1.png',
     url: 'https://inklink83.itch.io/dragys-island',
     description: "Explorez une île mystérieuse remplie de défis et de secrets dans ce jeu d'aventure captivant. Un projet réalisé avec passion par inklink83."
   },
@@ -26,7 +26,7 @@ const GAMES: Game[] = [
     id: '2', 
     name: 'Level Desert', 
     developer: 'db83', 
-    image: 'https://picsum.photos/id/168/800/600',
+    image: 'input_file_2.png',
     url: 'https://inklink83.itch.io/level-desert',
     description: "Survivez dans un désert impitoyable où chaque dune cache un nouveau danger. Testez vos limites dans ce jeu de survie intense par db83."
   },
@@ -34,7 +34,7 @@ const GAMES: Game[] = [
     id: '3', 
     name: 'Clinic Chaos', 
     developer: 'esperodail', 
-    image: 'https://picsum.photos/seed/clinic-chaos/800/600',
+    image: 'input_file_0.png',
     url: 'https://esperodail.itch.io/clinic-chaos',
     description: "Gérez le chaos d'une clinique pas comme les autres dans ce jeu de simulation déjanté. Un défi de gestion unique créé par esperodail."
   },
