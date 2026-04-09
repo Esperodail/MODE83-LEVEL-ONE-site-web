@@ -1,0 +1,406 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+*/
+
+
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { Ticket, Globe, Zap, Music, MapPin, Menu, X, Calendar, Play, ChevronLeft, ChevronRight } from 'lucide-react';
+import FluidBackground from './components/FluidBackground';
+import GradientText from './components/GlitchText';
+import CustomCursor from './components/CustomCursor';
+import { Game, Video } from './types';
+
+// Data
+const GAMES: Game[] = [
+  { 
+    id: '1', 
+    name: "Dragys's Island", 
+    developer: 'inklink83', 
+    image: 'https://picsum.photos/id/169/800/600',
+    url: 'https://inklink83.itch.io/dragys-island',
+    description: "Explorez une île mystérieuse remplie de défis et de secrets dans ce jeu d'aventure captivant."
+  },
+  { 
+    id: '2', 
+    name: 'Level Desert', 
+    developer: 'db83', 
+    image: 'https://picsum.photos/id/168/800/600',
+    url: 'https://db83.itch.io/level-desert',
+    description: "Survivez dans un désert impitoyable où chaque dune cache un nouveau danger."
+  },
+  { 
+    id: '3', 
+    name: 'Clinic Chaos', 
+    developer: 'esperodail', 
+    image: 'https://picsum.photos/seed/clinic-chaos/800/600',
+    url: 'https://esperodail.itch.io/clinic-chaos',
+    description: "Gérez le chaos d'une clinique pas comme les autres dans ce jeu de simulation déjanté."
+  },
+];
+
+const VIDEOS: Video[] = [
+  { id: '1', title: 'Showcase 1', url: 'https://www.youtube.com/embed/O8dlW8E0kBs', thumbnail: 'https://img.youtube.com/vi/O8dlW8E0kBs/maxresdefault.jpg' },
+  { id: '2', title: 'Showcase 2', url: 'https://www.youtube.com/embed/b_UE47U9Il8', thumbnail: 'https://img.youtube.com/vi/b_UE47U9Il8/maxresdefault.jpg' },
+  { id: '3', title: 'Showcase 3', url: 'https://www.youtube.com/embed/biRS_GETd2I', thumbnail: 'https://img.youtube.com/vi/biRS_GETd2I/maxresdefault.jpg' },
+  { id: '4', title: 'Showcase 4', url: 'https://www.youtube.com/embed/d1MK0YTS6L8', thumbnail: 'https://img.youtube.com/vi/d1MK0YTS6L8/maxresdefault.jpg' },
+  { id: '5', title: 'Showcase 5', url: 'https://www.youtube.com/embed/6c5wjtEk5N4', thumbnail: 'https://img.youtube.com/vi/6c5wjtEk5N4/maxresdefault.jpg' },
+  { id: '6', title: 'Showcase 6', url: 'https://www.youtube.com/embed/oozvQz6O8Ek', thumbnail: 'https://img.youtube.com/vi/oozvQz6O8Ek/maxresdefault.jpg' },
+];
+
+const App: React.FC = () => {
+  const { scrollYProgress } = useScroll();
+  const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedGame, setSelectedGame] = useState<Game | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+  
+  // Handle keyboard navigation for game modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!selectedGame) return;
+      if (e.key === 'ArrowLeft') navigateGame('prev');
+      if (e.key === 'ArrowRight') navigateGame('next');
+      if (e.key === 'Escape') setSelectedGame(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedGame]);
+
+  const scrollToSection = (id: string) => {
+    setMobileMenuOpen(false);
+    const element = document.getElementById(id);
+    if (element) {
+      const headerOffset = 100;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const navigateGame = (direction: 'next' | 'prev') => {
+    if (!selectedGame) return;
+    const currentIndex = GAMES.findIndex(a => a.id === selectedGame.id);
+    let nextIndex;
+    if (direction === 'next') {
+      nextIndex = (currentIndex + 1) % GAMES.length;
+    } else {
+      nextIndex = (currentIndex - 1 + GAMES.length) % GAMES.length;
+    }
+    setSelectedGame(GAMES[nextIndex]);
+  };
+  
+  return (
+    <div className="relative min-h-screen text-white selection:bg-[#4fb7b3] selection:text-black cursor-auto md:cursor-none overflow-x-hidden">
+      <CustomCursor />
+      <FluidBackground />
+      
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 md:px-8 py-6 mix-blend-difference">
+        <div className="font-heading text-xl md:text-2xl font-bold tracking-tighter text-white cursor-default z-50">MODE83</div>
+        
+        {/* Desktop Menu */}
+        <div className="hidden md:flex gap-10 text-sm font-bold tracking-widest uppercase">
+          {['Jeux', 'Vidéos', 'Formation'].map((item) => (
+            <button 
+              key={item} 
+              onClick={() => scrollToSection(item.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))}
+              className="hover:text-[#a8fbd3] transition-colors text-white cursor-pointer bg-transparent border-none"
+              data-hover="true"
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+        <button 
+          onClick={() => window.open('https://mode83.com', '_blank')}
+          className="hidden md:inline-block border border-white px-8 py-3 text-xs font-bold tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-300 text-white cursor-pointer bg-transparent"
+          data-hover="true"
+        >
+          Site Officiel
+        </button>
+
+        {/* Mobile Menu Toggle */}
+        <button 
+          className="md:hidden text-white z-50 relative w-10 h-10 flex items-center justify-center"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+           {mobileMenuOpen ? <X /> : <Menu />}
+        </button>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-0 z-30 bg-[#31326f]/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 md:hidden"
+          >
+            {['Jeux', 'Vidéos', 'Formation'].map((item) => (
+              <button
+                key={item}
+                onClick={() => scrollToSection(item.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))}
+                className="text-4xl font-heading font-bold text-white hover:text-[#a8fbd3] transition-colors uppercase bg-transparent border-none"
+              >
+                {item}
+              </button>
+            ))}
+            <button 
+              onClick={() => window.open('https://mode83.com', '_blank')}
+              className="mt-8 border border-white px-10 py-4 text-sm font-bold tracking-widest uppercase bg-white text-black"
+            >
+              Site Officiel
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* HERO SECTION */}
+      <header className="relative h-[100svh] min-h-[600px] flex flex-col items-center justify-center overflow-hidden px-4">
+        <motion.div 
+          style={{ y, opacity }}
+          className="z-10 text-center flex flex-col items-center w-full max-w-6xl pb-24 md:pb-20"
+        >
+           {/* Training Info */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="flex items-center gap-3 md:gap-6 text-xs md:text-base font-mono text-[#a8fbd3] tracking-[0.2em] md:tracking-[0.3em] uppercase mb-4 bg-black/20 px-4 py-2 rounded-full backdrop-blur-sm"
+          >
+            <span>LEVEL ONE</span>
+            <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-[#4fb7b3] rounded-full animate-pulse"/>
+            <span>Game Design & Dev</span>
+          </motion.div>
+
+          {/* Main Title */}
+          <div className="relative w-full flex justify-center items-center">
+            <GradientText 
+              text="LEVEL ONE" 
+              as="h1" 
+              className="text-[12vw] md:text-[10vw] leading-[0.9] font-black tracking-tighter text-center" 
+            />
+          </div>
+          
+          <motion.div
+             initial={{ scaleX: 0 }}
+             animate={{ scaleX: 1 }}
+             transition={{ duration: 1.5, delay: 0.5, ease: "circOut" }}
+             className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-white/50 to-transparent mt-4 md:mt-8 mb-6 md:mb-8"
+          />
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 1 }}
+            className="text-base md:text-2xl font-light max-w-2xl mx-auto text-white/90 leading-relaxed drop-shadow-lg px-4"
+          >
+            Découvrez les réalisations des étudiants de la formation MODE83.
+          </motion.p>
+        </motion.div>
+
+        {/* MARQUEE */}
+        <div className="absolute bottom-12 md:bottom-16 left-0 w-full py-4 md:py-6 bg-white text-black z-20 overflow-hidden border-y-4 border-black shadow-[0_0_40px_rgba(255,255,255,0.4)]">
+          <motion.div 
+            className="flex w-fit will-change-transform"
+            animate={{ x: "-50%" }}
+            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+          >
+            {[0, 1].map((key) => (
+              <div key={key} className="flex whitespace-nowrap shrink-0">
+                {[...Array(4)].map((_, i) => (
+                  <span key={i} className="text-3xl md:text-7xl font-heading font-black px-8 flex items-center gap-4">
+                    MODE83 LEVEL ONE <span className="text-black text-2xl md:text-4xl">●</span> 
+                    GAME DESIGN <span className="text-black text-2xl md:text-4xl">●</span> 
+                    DEVELOPPEMENT <span className="text-black text-2xl md:text-4xl">●</span> 
+                  </span>
+                ))}
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </header>
+
+      {/* GAMES SECTION */}
+      <section id="jeux" className="relative z-10 py-20 md:py-32">
+        <div className="max-w-[1600px] mx-auto px-4 md:px-6">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16 px-4">
+             <h2 className="text-5xl md:text-8xl font-heading font-bold uppercase leading-[0.9] drop-shadow-lg break-words w-full md:w-auto">
+              Nos <br/> 
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a8fbd3] to-[#4fb7b3]">Jeux</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-l border-white/10 bg-black/20 backdrop-blur-sm">
+            {GAMES.map((game) => (
+              <motion.div
+                key={game.id}
+                className="group relative h-[400px] md:h-[500px] w-full overflow-hidden border-b md:border-r border-white/10 bg-black cursor-pointer"
+                whileHover="hover"
+                onClick={() => setSelectedGame(game)}
+                data-hover="true"
+              >
+                <motion.img 
+                  src={game.image} 
+                  alt={game.name} 
+                  className="h-full w-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-90 transition-all duration-500"
+                />
+                <div className="absolute inset-0 p-8 flex flex-col justify-end bg-gradient-to-t from-black/80 to-transparent">
+                  <h3 className="text-3xl font-heading font-bold uppercase">{game.name}</h3>
+                  <p className="text-[#a8fbd3] font-mono text-sm uppercase tracking-widest">{game.developer}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* VIDEOS SECTION */}
+      <section id="videos" className="relative z-10 py-20 md:py-32 bg-black/20 backdrop-blur-sm border-t border-white/10 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 relative">
+          <h2 className="text-5xl md:text-8xl font-heading font-bold mb-12 md:mb-20 text-center uppercase">
+            Showcase <br/> <GradientText text="VIDÉOS" className="text-6xl md:text-9xl" />
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {VIDEOS.map((video) => (
+              <motion.div
+                key={video.id}
+                className="relative aspect-video rounded-2xl overflow-hidden border border-white/10 group cursor-pointer"
+                whileHover={{ y: -10 }}
+                onClick={() => setSelectedVideo(video)}
+              >
+                <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Play className="w-8 h-8 fill-white" />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TRAINING SECTION */}
+      <section id="formation" className="relative z-10 py-20 md:py-32 px-4 md:px-6 bg-black/30 backdrop-blur-lg">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-4xl md:text-7xl font-heading font-bold mb-8 uppercase">
+                La Formation <br/> <span className="text-[#a8fbd3]">LEVEL ONE</span>
+              </h2>
+              <p className="text-lg md:text-xl text-gray-300 mb-10 leading-relaxed">
+                Une immersion totale dans l'univers du jeu vidéo. De la conception à la réalisation, nos étudiants apprennent à maîtriser les outils et les techniques de l'industrie.
+              </p>
+              <div className="space-y-6">
+                {[
+                  { title: 'Game Design', desc: 'Apprenez à créer des mécaniques de jeu engageantes.' },
+                  { title: 'Développement', desc: 'Maîtrisez les moteurs de jeu comme Unity ou Unreal.' },
+                  { title: 'Art & Design', desc: 'Créez des univers visuels uniques et immersifs.' },
+                ].map((item, i) => (
+                  <div key={i} className="flex gap-6 items-start">
+                    <div className="w-12 h-12 rounded-xl bg-[#4fb7b3]/20 flex items-center justify-center shrink-0">
+                      <Zap className="text-[#a8fbd3]" />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-bold font-heading mb-1">{item.title}</h4>
+                      <p className="text-gray-400">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="relative aspect-square rounded-3xl overflow-hidden border border-white/10">
+              <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1000&auto=format&fit=crop" alt="Gaming Setup" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="relative z-10 border-t border-white/10 py-12 md:py-16 bg-black/80 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="font-heading text-3xl font-bold tracking-tighter text-white">MODE83</div>
+          <div className="flex gap-8">
+            <a href="https://mode83.com" className="text-gray-400 hover:text-white transition-colors uppercase text-xs tracking-widest font-bold">Site Web</a>
+            <a href="#" className="text-gray-400 hover:text-white transition-colors uppercase text-xs tracking-widest font-bold">Contact</a>
+          </div>
+        </div>
+      </footer>
+
+      {/* Game Modal */}
+      <AnimatePresence>
+        {selectedGame && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedGame(null)}
+            className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-6xl h-[90vh] bg-[#1a1b3b] border border-white/10 overflow-hidden flex flex-col"
+            >
+              <div className="p-4 border-b border-white/10 flex justify-between items-center bg-black/40">
+                <h3 className="text-xl font-heading font-bold">{selectedGame.name}</h3>
+                <button onClick={() => setSelectedGame(null)} className="p-2 hover:bg-white/10 rounded-full"><X /></button>
+              </div>
+              <div className="flex-1 bg-black relative">
+                <iframe 
+                  src={selectedGame.url} 
+                  className="w-full h-full border-none"
+                  title={selectedGame.name}
+                  allow="autoplay; fullscreen"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Video Modal */}
+      <AnimatePresence>
+        {selectedVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedVideo(null)}
+            className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+          >
+            <motion.div
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.9 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-5xl aspect-video bg-black rounded-3xl overflow-hidden border border-white/10"
+            >
+              <button onClick={() => setSelectedVideo(null)} className="absolute top-4 right-4 z-10 p-2 bg-black/50 rounded-full hover:bg-white/20"><X /></button>
+              <iframe 
+                src={selectedVideo.url} 
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+export default App;
