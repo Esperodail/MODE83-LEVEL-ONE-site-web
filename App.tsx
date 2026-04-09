@@ -208,10 +208,10 @@ const App: React.FC = () => {
         
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-10 text-sm font-bold tracking-widest uppercase">
-          {['Jeux', 'Vidéos', 'Formation'].map((item) => (
+          {['Jeux', 'Vidéos', 'Formation CDUI'].map((item) => (
             <button 
               key={item} 
-              onClick={() => scrollToSection(item.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))}
+              onClick={() => scrollToSection(item.split(' ')[0].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))}
               className="hover:text-[#a8fbd3] transition-colors text-white cursor-pointer bg-transparent border-none"
               data-hover="true"
             >
@@ -245,10 +245,10 @@ const App: React.FC = () => {
             exit={{ opacity: 0, y: -20 }}
             className="fixed inset-0 z-30 bg-[#31326f]/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 md:hidden"
           >
-            {['Jeux', 'Vidéos', 'Formation'].map((item) => (
+            {['Jeux', 'Vidéos', 'Formation CDUI'].map((item) => (
               <button
                 key={item}
-                onClick={() => scrollToSection(item.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))}
+                onClick={() => scrollToSection(item.split(' ')[0].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))}
                 className="text-4xl font-heading font-bold text-white hover:text-[#a8fbd3] transition-colors uppercase bg-transparent border-none"
               >
                 {item}
@@ -384,8 +384,8 @@ const App: React.FC = () => {
       <section id="formation" className="relative z-10 py-20 md:py-32 px-4 md:px-6 bg-black/30 backdrop-blur-lg">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 md:mb-24">
-            <h2 className="text-5xl md:text-8xl font-heading font-bold mb-6 uppercase">
-              Formation <br/> <span className="text-[#a8fbd3]">CDUI</span>
+            <h2 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold mb-6 uppercase leading-tight">
+              FORMATION LEVEL ONE <br/> <span className="text-[#a8fbd3]">CDUI</span>
             </h2>
             <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
               Concepteur Développeur d'Applications Web et Mobile. Une formation complète pour maîtriser l'ensemble de la chaîne de production digitale.
