@@ -12,18 +12,13 @@ import GradientText from './components/GlitchText';
 import CustomCursor from './components/CustomCursor';
 import { Game, Video } from './types';
 
-// Assets
-import dragysImg from './assets/dragys.png';
-import desertImg from './assets/desert.png';
-import clinicImg from './assets/clinic.png';
-
 // Data
 const GAMES: Game[] = [
   { 
     id: '1', 
     name: "Dragys's Island", 
     developer: 'inklink83', 
-    image: dragysImg,
+    image: 'https://drive.google.com/uc?id=1CDYxGsQX9SFHne--n9izXkDjf5VbJjhY',
     url: 'https://inklink83.itch.io/dragys-island',
     description: "Explorez une île mystérieuse remplie de défis et de secrets dans ce jeu d'aventure captivant. Un projet réalisé avec passion par inklink83."
   },
@@ -31,7 +26,7 @@ const GAMES: Game[] = [
     id: '2', 
     name: 'Level Desert', 
     developer: 'db83', 
-    image: desertImg,
+    image: 'https://drive.google.com/uc?id=1hWg_28EpOIUneuEC7-MXv43zkDRUGCQl',
     url: 'https://db83.itch.io/level-desert',
     description: "Survivez dans un désert impitoyable où chaque dune cache un nouveau danger. Testez vos limites dans ce jeu de survie intense par db83."
   },
@@ -39,7 +34,7 @@ const GAMES: Game[] = [
     id: '3', 
     name: 'Clinic Chaos', 
     developer: 'esperodail', 
-    image: clinicImg,
+    image: 'https://drive.google.com/uc?id=1o0Ozl9oKIday8OgTK0wOW9LBXfWANNW-',
     url: 'https://esperodail.itch.io/clinic-chaos',
     description: "Gérez le chaos d'une clinique pas comme les autres dans ce jeu de simulation déjanté. Un défi de gestion unique créé par esperodail."
   },
@@ -456,6 +451,43 @@ const App: React.FC = () => {
                   <p className="text-sm text-gray-300">Préparation intensive au titre professionnel avec accompagnement personnalisé.</p>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PARTNERS SECTION */}
+      <section className="relative z-10 py-16 bg-black/40 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-70 hover:opacity-100 transition-opacity duration-500">
+            <div className="flex items-center gap-4 grayscale hover:grayscale-0 transition-all">
+              <img 
+                src="https://drive.google.com/uc?id=1AjdM_2CVU0laEZ0pENx_ar0SQpMqMm49" 
+                alt="MODE83" 
+                className="h-12 md:h-16 w-auto object-contain"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            <div className="flex items-center gap-4 grayscale hover:grayscale-0 transition-all">
+              <img 
+                src="https://drive.google.com/uc?id=1JpVlTXMg8d2IwQzvKe_CIM4qAENw8duw" 
+                alt="Région Sud" 
+                className="h-12 md:h-16 w-auto object-contain"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            <div className="flex items-center gap-4 grayscale hover:grayscale-0 transition-all">
+              <img 
+                src="https://drive.google.com/uc?id=1f0KliWtwc8uKrDXmQrreu6HVdGqVGwNi" 
+                alt="France Travail" 
+                className="h-12 md:h-16 w-auto object-contain"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            {/* Keep some stylized text for the project identity if needed */}
+            <div className="flex items-center gap-3 grayscale hover:grayscale-0 transition-all">
+              <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center font-bold text-white">L1</div>
+              <span className="font-heading font-bold tracking-tighter text-xl">LEVEL ONE</span>
             </div>
           </div>
         </div>
