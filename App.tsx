@@ -6,7 +6,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Ticket, Globe, Zap, Music, MapPin, Menu, X, Calendar, Play, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Ticket, Globe, Zap, Music, MapPin, Menu, X, Calendar, Play, ChevronLeft, ChevronRight, ExternalLink, BookOpen, Target, Clock, Award, CheckCircle2 } from 'lucide-react';
 import FluidBackground from './components/FluidBackground';
 import GradientText from './components/GlitchText';
 import CustomCursor from './components/CustomCursor';
@@ -20,15 +20,15 @@ const GAMES: Game[] = [
     developer: 'inklink83', 
     image: 'https://picsum.photos/id/169/800/600',
     url: 'https://inklink83.itch.io/dragys-island',
-    description: "Explorez une île mystérieuse remplie de défis et de secrets dans ce jeu d'aventure captivant."
+    description: "Explorez une île mystérieuse remplie de défis et de secrets dans ce jeu d'aventure captivant. Un projet réalisé avec passion par inklink83."
   },
   { 
     id: '2', 
     name: 'Level Desert', 
     developer: 'db83', 
     image: 'https://picsum.photos/id/168/800/600',
-    url: 'https://db83.itch.io/level-desert',
-    description: "Survivez dans un désert impitoyable où chaque dune cache un nouveau danger."
+    url: 'https://inklink83.itch.io/level-desert',
+    description: "Survivez dans un désert impitoyable où chaque dune cache un nouveau danger. Testez vos limites dans ce jeu de survie intense par db83."
   },
   { 
     id: '3', 
@@ -36,7 +36,7 @@ const GAMES: Game[] = [
     developer: 'esperodail', 
     image: 'https://picsum.photos/seed/clinic-chaos/800/600',
     url: 'https://esperodail.itch.io/clinic-chaos',
-    description: "Gérez le chaos d'une clinique pas comme les autres dans ce jeu de simulation déjanté."
+    description: "Gérez le chaos d'une clinique pas comme les autres dans ce jeu de simulation déjanté. Un défi de gestion unique créé par esperodail."
   },
 ];
 
@@ -48,6 +48,106 @@ const VIDEOS: Video[] = [
   { id: '5', title: 'Showcase 5', url: 'https://www.youtube.com/embed/6c5wjtEk5N4', thumbnail: 'https://img.youtube.com/vi/6c5wjtEk5N4/maxresdefault.jpg' },
   { id: '6', title: 'Showcase 6', url: 'https://www.youtube.com/embed/oozvQz6O8Ek', thumbnail: 'https://img.youtube.com/vi/oozvQz6O8Ek/maxresdefault.jpg' },
 ];
+
+const FORMATION_MODULES = [
+  {
+    id: 1,
+    title: "Illustrations, Graphismes et Visuels",
+    objectifs: ["Principes fondamentaux du design graphique", "Maîtrise des outils (Photoshop, Illustrator)", "Création visuelle web et mobile"],
+    details: "Théorie des couleurs, typographie, composition. Retouche photo, dessin vectoriel, création de logos et d'icônes."
+  },
+  {
+    id: 2,
+    title: "Conception d'Interfaces et Prototypes",
+    objectifs: ["UI Design ergonomique", "Outils de prototypage (Figma, Sketch)", "Tests d'utilisabilité"],
+    details: "Hiérarchie visuelle, guidage utilisateur, wireframes interactifs, maquettes responsives."
+  },
+  {
+    id: 3,
+    title: "Animation et Supports de Diffusion",
+    objectifs: ["Techniques d'animation web/mobile", "Motion Design", "Adobe After Effects & Animate"],
+    details: "Principes d'animation, storyboarding, micro-interactions, vidéos explicatives."
+  },
+  {
+    id: 4,
+    title: "Supports de Communication",
+    objectifs: ["Branding et stratégie visuelle", "Adobe InDesign", "Supports imprimés et digitaux"],
+    details: "Conception de brochures, flyers, visuels réseaux sociaux, alignement avec l'identité de marque."
+  },
+  {
+    id: 5,
+    title: "Webmarketing et Veille",
+    objectifs: ["SEO, SEM, Emailing", "Google Analytics & Ads", "Veille technologique"],
+    details: "Stratégies d'acquisition, analyse de performance, veille concurrentielle."
+  },
+  {
+    id: 6,
+    title: "Intégration et Optimisation",
+    objectifs: ["HTML, CSS, JavaScript", "Standards W3C", "Responsive Design"],
+    details: "Frameworks (Bootstrap), optimisation SEO on-page, performance web."
+  },
+  {
+    id: 7,
+    title: "Gestion de Contenus et Sécurité",
+    objectifs: ["CMS (WordPress, Joomla)", "Personnalisation", "Sécurité Web"],
+    details: "Installation, gestion de médias, protection contre les attaques, sauvegardes."
+  }
+];
+
+const VideoCard: React.FC<{ video: Video; onSelect: (v: Video) => void }> = ({ video, onSelect }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <motion.div
+      className="relative aspect-video rounded-2xl overflow-hidden border border-white/10 group cursor-pointer bg-black"
+      whileHover={{ y: -10 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={() => onSelect(video)}
+    >
+      <AnimatePresence mode="wait">
+        {!isHovered ? (
+          <motion.div
+            key="thumbnail"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0"
+          >
+            <img 
+              src={video.thumbnail} 
+              alt={video.title} 
+              className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity" 
+            />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Play className="w-8 h-8 fill-white" />
+              </div>
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="preview"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 pointer-events-none"
+          >
+            <iframe
+              src={`${video.url}?autoplay=1&mute=1&controls=0&loop=1&playlist=${video.url.split('/').pop()}`}
+              className="w-full h-full scale-110"
+              allow="autoplay"
+              frameBorder="0"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+        <p className="text-sm font-bold truncate">{video.title}</p>
+      </div>
+    </motion.div>
+  );
+};
 
 const App: React.FC = () => {
   const { scrollYProgress } = useScroll();
@@ -119,7 +219,7 @@ const App: React.FC = () => {
           ))}
         </div>
         <button 
-          onClick={() => window.open('https://mode83.com', '_blank')}
+          onClick={() => window.open('https://mode83.net/site/', '_blank')}
           className="hidden md:inline-block border border-white px-8 py-3 text-xs font-bold tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-300 text-white cursor-pointer bg-transparent"
           data-hover="true"
         >
@@ -154,7 +254,7 @@ const App: React.FC = () => {
               </button>
             ))}
             <button 
-              onClick={() => window.open('https://mode83.com', '_blank')}
+              onClick={() => window.open('https://mode83.net/site/', '_blank')}
               className="mt-8 border border-white px-10 py-4 text-sm font-bold tracking-widest uppercase bg-white text-black"
             >
               Site Officiel
@@ -272,19 +372,7 @@ const App: React.FC = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {VIDEOS.map((video) => (
-              <motion.div
-                key={video.id}
-                className="relative aspect-video rounded-2xl overflow-hidden border border-white/10 group cursor-pointer"
-                whileHover={{ y: -10 }}
-                onClick={() => setSelectedVideo(video)}
-              >
-                <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Play className="w-8 h-8 fill-white" />
-                  </div>
-                </div>
-              </motion.div>
+              <VideoCard key={video.id} video={video} onSelect={setSelectedVideo} />
             ))}
           </div>
         </div>
@@ -293,35 +381,74 @@ const App: React.FC = () => {
       {/* TRAINING SECTION */}
       <section id="formation" className="relative z-10 py-20 md:py-32 px-4 md:px-6 bg-black/30 backdrop-blur-lg">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-4xl md:text-7xl font-heading font-bold mb-8 uppercase">
-                La Formation <br/> <span className="text-[#a8fbd3]">LEVEL ONE</span>
-              </h2>
-              <p className="text-lg md:text-xl text-gray-300 mb-10 leading-relaxed">
-                Une immersion totale dans l'univers du jeu vidéo. De la conception à la réalisation, nos étudiants apprennent à maîtriser les outils et les techniques de l'industrie.
-              </p>
-              <div className="space-y-6">
-                {[
-                  { title: 'Game Design', desc: 'Apprenez à créer des mécaniques de jeu engageantes.' },
-                  { title: 'Développement', desc: 'Maîtrisez les moteurs de jeu comme Unity ou Unreal.' },
-                  { title: 'Art & Design', desc: 'Créez des univers visuels uniques et immersifs.' },
-                ].map((item, i) => (
-                  <div key={i} className="flex gap-6 items-start">
-                    <div className="w-12 h-12 rounded-xl bg-[#4fb7b3]/20 flex items-center justify-center shrink-0">
-                      <Zap className="text-[#a8fbd3]" />
+          <div className="text-center mb-16 md:mb-24">
+            <h2 className="text-5xl md:text-8xl font-heading font-bold mb-6 uppercase">
+              Formation <br/> <span className="text-[#a8fbd3]">CDUI</span>
+            </h2>
+            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              Concepteur Développeur d'Applications Web et Mobile. Une formation complète pour maîtriser l'ensemble de la chaîne de production digitale.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {FORMATION_MODULES.map((module) => (
+              <motion.div
+                key={module.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all group"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-[#4fb7b3]/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <BookOpen className="text-[#a8fbd3]" />
+                </div>
+                <h3 className="text-2xl font-bold font-heading mb-4 text-white group-hover:text-[#a8fbd3] transition-colors">{module.title}</h3>
+                <div className="space-y-4">
+                  <p className="text-gray-400 text-sm leading-relaxed">{module.details}</p>
+                  <ul className="space-y-2">
+                    {module.objectifs.map((obj, idx) => (
+                      <li key={idx} className="flex items-center gap-2 text-xs text-gray-500">
+                        <CheckCircle2 className="w-3 h-3 text-[#4fb7b3]" />
+                        {obj}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-20 p-8 md:p-12 rounded-[3rem] bg-gradient-to-br from-[#1a1b3b] to-black border border-white/10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h3 className="text-3xl md:text-4xl font-heading font-bold mb-6 flex items-center gap-4">
+                  <Award className="text-[#a8fbd3]" />
+                  Modalités d'Évaluation
+                </h3>
+                <div className="space-y-8">
+                  {[
+                    { title: "Dossier Professionnel", desc: "Documentation des projets, choix techniques et stratégies de communication." },
+                    { title: "Mise en Situation", desc: "Présentation de projets réalisés devant un jury professionnel." },
+                    { title: "Entretien Final", desc: "Évaluation de la compréhension globale du métier et de la culture professionnelle." }
+                  ].map((item, i) => (
+                    <div key={i} className="flex gap-6">
+                      <div className="text-[#a8fbd3] font-heading font-bold text-2xl opacity-50">0{i+1}</div>
+                      <div>
+                        <h4 className="text-xl font-bold mb-2">{item.title}</h4>
+                        <p className="text-gray-400 text-sm">{item.desc}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="text-xl font-bold font-heading mb-1">{item.title}</h4>
-                      <p className="text-gray-400">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className="relative aspect-square rounded-3xl overflow-hidden border border-white/10">
-              <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1000&auto=format&fit=crop" alt="Gaming Setup" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+              <div className="relative aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1000&auto=format&fit=crop" alt="Collaboration" className="w-full h-full object-cover opacity-60" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-black/40 backdrop-blur-sm">
+                  <Target className="w-12 h-12 text-[#a8fbd3] mb-4" />
+                  <h4 className="text-2xl font-bold mb-2">Objectif Examen</h4>
+                  <p className="text-sm text-gray-300">Préparation intensive au titre professionnel CDUI avec accompagnement personnalisé.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -331,7 +458,7 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="font-heading text-3xl font-bold tracking-tighter text-white">MODE83</div>
           <div className="flex gap-8">
-            <a href="https://mode83.com" className="text-gray-400 hover:text-white transition-colors uppercase text-xs tracking-widest font-bold">Site Web</a>
+            <a href="https://mode83.net/site/" className="text-gray-400 hover:text-white transition-colors uppercase text-xs tracking-widest font-bold">Site Web</a>
             <a href="#" className="text-gray-400 hover:text-white transition-colors uppercase text-xs tracking-widest font-bold">Contact</a>
           </div>
         </div>
@@ -352,19 +479,41 @@ const App: React.FC = () => {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-6xl h-[90vh] bg-[#1a1b3b] border border-white/10 overflow-hidden flex flex-col"
+              className="relative w-full max-w-4xl bg-[#1a1b3b] border border-white/10 overflow-hidden flex flex-col rounded-[2rem] shadow-2xl"
             >
-              <div className="p-4 border-b border-white/10 flex justify-between items-center bg-black/40">
-                <h3 className="text-xl font-heading font-bold">{selectedGame.name}</h3>
-                <button onClick={() => setSelectedGame(null)} className="p-2 hover:bg-white/10 rounded-full"><X /></button>
+              <div className="p-6 border-b border-white/10 flex justify-between items-center bg-black/40">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-[#4fb7b3]/20 flex items-center justify-center">
+                    <Zap className="text-[#a8fbd3]" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-heading font-bold">{selectedGame.name}</h3>
+                    <p className="text-xs text-[#a8fbd3] font-mono tracking-widest uppercase">{selectedGame.developer}</p>
+                  </div>
+                </div>
+                <button onClick={() => setSelectedGame(null)} className="p-2 hover:bg-white/10 rounded-full transition-colors"><X /></button>
               </div>
-              <div className="flex-1 bg-black relative">
-                <iframe 
-                  src={selectedGame.url} 
-                  className="w-full h-full border-none"
-                  title={selectedGame.name}
-                  allow="autoplay; fullscreen"
-                />
+              <div className="p-8 md:p-12 flex flex-col md:flex-row gap-12 items-center">
+                <div className="w-full md:w-1/2 aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-lg">
+                  <img src={selectedGame.image} alt={selectedGame.name} className="w-full h-full object-cover" />
+                </div>
+                <div className="w-full md:w-1/2 space-y-8">
+                  <p className="text-lg text-gray-300 leading-relaxed">
+                    {selectedGame.description}
+                  </p>
+                  <div className="flex flex-col gap-4">
+                    <button 
+                      onClick={() => window.open(selectedGame.url, '_blank')}
+                      className="w-full py-5 bg-[#a8fbd3] text-black font-bold rounded-2xl hover:bg-white transition-all flex items-center justify-center gap-3 group"
+                    >
+                      JOUER SUR ITCH.IO
+                      <ExternalLink className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    </button>
+                    <p className="text-center text-xs text-gray-500 italic">
+                      Note: L'intégration directe est désactivée pour assurer une meilleure performance.
+                    </p>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </motion.div>
