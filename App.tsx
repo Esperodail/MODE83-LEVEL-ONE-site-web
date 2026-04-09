@@ -18,7 +18,7 @@ const GAMES: Game[] = [
     id: '1', 
     name: "Dragys's Island", 
     developer: 'inklink83', 
-    image: 'https://drive.google.com/uc?id=1CDYxGsQX9SFHne--n9izXkDjf5VbJjhY',
+    image: 'https://lh3.googleusercontent.com/d/1CDYxGsQX9SFHne--n9izXkDjf5VbJjhY',
     url: 'https://inklink83.itch.io/dragys-island',
     description: "Explorez une île mystérieuse remplie de défis et de secrets dans ce jeu d'aventure captivant. Un projet réalisé avec passion par inklink83."
   },
@@ -26,7 +26,7 @@ const GAMES: Game[] = [
     id: '2', 
     name: 'Level Desert', 
     developer: 'db83', 
-    image: 'https://drive.google.com/uc?id=1hWg_28EpOIUneuEC7-MXv43zkDRUGCQl',
+    image: 'https://lh3.googleusercontent.com/d/1hWg_28EpOIUneuEC7-MXv43zkDRUGCQl',
     url: 'https://db83.itch.io/level-desert',
     description: "Survivez dans un désert impitoyable où chaque dune cache un nouveau danger. Testez vos limites dans ce jeu de survie intense par db83."
   },
@@ -34,7 +34,7 @@ const GAMES: Game[] = [
     id: '3', 
     name: 'Clinic Chaos', 
     developer: 'esperodail', 
-    image: 'https://drive.google.com/uc?id=1o0Ozl9oKIday8OgTK0wOW9LBXfWANNW-',
+    image: 'https://lh3.googleusercontent.com/d/1o0Ozl9oKIday8OgTK0wOW9LBXfWANNW-',
     url: 'https://esperodail.itch.io/clinic-chaos',
     description: "Gérez le chaos d'une clinique pas comme les autres dans ce jeu de simulation déjanté. Un défi de gestion unique créé par esperodail."
   },
@@ -462,7 +462,7 @@ const App: React.FC = () => {
           <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-70 hover:opacity-100 transition-opacity duration-500">
             <div className="flex items-center gap-4 grayscale hover:grayscale-0 transition-all">
               <img 
-                src="https://drive.google.com/uc?id=1AjdM_2CVU0laEZ0pENx_ar0SQpMqMm49" 
+                src="https://lh3.googleusercontent.com/d/1AjdM_2CVU0laEZ0pENx_ar0SQpMqMm49" 
                 alt="MODE83" 
                 className="h-12 md:h-16 w-auto object-contain"
                 referrerPolicy="no-referrer"
@@ -470,7 +470,7 @@ const App: React.FC = () => {
             </div>
             <div className="flex items-center gap-4 grayscale hover:grayscale-0 transition-all">
               <img 
-                src="https://drive.google.com/uc?id=1JpVlTXMg8d2IwQzvKe_CIM4qAENw8duw" 
+                src="https://lh3.googleusercontent.com/d/1JpVlTXMg8d2IwQzvKe_CIM4qAENw8duw" 
                 alt="Région Sud" 
                 className="h-12 md:h-16 w-auto object-contain"
                 referrerPolicy="no-referrer"
@@ -478,7 +478,7 @@ const App: React.FC = () => {
             </div>
             <div className="flex items-center gap-4 grayscale hover:grayscale-0 transition-all">
               <img 
-                src="https://drive.google.com/uc?id=1f0KliWtwc8uKrDXmQrreu6HVdGqVGwNi" 
+                src="https://lh3.googleusercontent.com/d/1f0KliWtwc8uKrDXmQrreu6HVdGqVGwNi" 
                 alt="France Travail" 
                 className="h-12 md:h-16 w-auto object-contain"
                 referrerPolicy="no-referrer"
