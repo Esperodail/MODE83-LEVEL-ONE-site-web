@@ -117,6 +117,7 @@ const VideoCard: React.FC<{ video: Video; onSelect: (v: Video) => void }> = ({ v
             <img 
               src={video.thumbnail} 
               alt={video.title} 
+              referrerPolicy="no-referrer"
               className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity" 
             />
             <div className="absolute inset-0 flex items-center justify-center">
@@ -349,8 +350,9 @@ const App: React.FC = () => {
                 data-hover="true"
               >
                 <motion.img 
-                  src={game.image} 
+                  src={`/${game.image}`} 
                   alt={game.name} 
+                  referrerPolicy="no-referrer"
                   className="h-full w-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-90 transition-all duration-500"
                 />
                 <div className="absolute inset-0 p-8 flex flex-col justify-end bg-gradient-to-t from-black/80 to-transparent">
@@ -442,7 +444,7 @@ const App: React.FC = () => {
                 </div>
               </div>
               <div className="relative aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1000&auto=format&fit=crop" alt="Collaboration" className="w-full h-full object-cover opacity-60" />
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1000&auto=format&fit=crop" alt="Collaboration" referrerPolicy="no-referrer" className="w-full h-full object-cover opacity-60" />
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-black/40 backdrop-blur-sm">
                   <Target className="w-12 h-12 text-[#a8fbd3] mb-4" />
                   <h4 className="text-2xl font-bold mb-2">Objectif Examen</h4>
@@ -495,7 +497,7 @@ const App: React.FC = () => {
               </div>
               <div className="p-8 md:p-12 flex flex-col md:flex-row gap-12 items-center">
                 <div className="w-full md:w-1/2 aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-lg">
-                  <img src={selectedGame.image} alt={selectedGame.name} className="w-full h-full object-cover" />
+                  <img src={`/${selectedGame.image}`} alt={selectedGame.name} referrerPolicy="no-referrer" className="w-full h-full object-cover" />
                 </div>
                 <div className="w-full md:w-1/2 space-y-8">
                   <p className="text-lg text-gray-300 leading-relaxed">
