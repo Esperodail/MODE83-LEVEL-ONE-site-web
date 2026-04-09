@@ -18,7 +18,7 @@ const GAMES: Game[] = [
     id: '1', 
     name: "Dragys's Island", 
     developer: 'inklink83', 
-    image: 'input_file_1.png',
+    image: 'https://picsum.photos/id/169/800/600',
     url: 'https://inklink83.itch.io/dragys-island',
     description: "Explorez une île mystérieuse remplie de défis et de secrets dans ce jeu d'aventure captivant. Un projet réalisé avec passion par inklink83."
   },
@@ -26,7 +26,7 @@ const GAMES: Game[] = [
     id: '2', 
     name: 'Level Desert', 
     developer: 'db83', 
-    image: 'input_file_2.png',
+    image: 'https://picsum.photos/id/168/800/600',
     url: 'https://inklink83.itch.io/level-desert',
     description: "Survivez dans un désert impitoyable où chaque dune cache un nouveau danger. Testez vos limites dans ce jeu de survie intense par db83."
   },
@@ -34,7 +34,7 @@ const GAMES: Game[] = [
     id: '3', 
     name: 'Clinic Chaos', 
     developer: 'esperodail', 
-    image: 'input_file_0.png',
+    image: 'https://picsum.photos/seed/clinic/800/600',
     url: 'https://esperodail.itch.io/clinic-chaos',
     description: "Gérez le chaos d'une clinique pas comme les autres dans ce jeu de simulation déjanté. Un défi de gestion unique créé par esperodail."
   },
@@ -350,7 +350,7 @@ const App: React.FC = () => {
                 data-hover="true"
               >
                 <motion.img 
-                  src={`/${game.image}`} 
+                  src={game.image} 
                   alt={game.name} 
                   referrerPolicy="no-referrer"
                   className="h-full w-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-90 transition-all duration-500"
@@ -497,7 +497,7 @@ const App: React.FC = () => {
               </div>
               <div className="p-8 md:p-12 flex flex-col md:flex-row gap-12 items-center">
                 <div className="w-full md:w-1/2 aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-lg">
-                  <img src={`/${selectedGame.image}`} alt={selectedGame.name} referrerPolicy="no-referrer" className="w-full h-full object-cover" />
+                  <img src={selectedGame.image} alt={selectedGame.name} referrerPolicy="no-referrer" className="w-full h-full object-cover" />
                 </div>
                 <div className="w-full md:w-1/2 space-y-8">
                   <p className="text-lg text-gray-300 leading-relaxed">
