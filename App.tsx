@@ -18,7 +18,7 @@ const GAMES: Game[] = [
     id: '1', 
     name: "Dragys's Island", 
     developer: 'inklink83', 
-    image: 'https://lh3.googleusercontent.com/d/1CDYxGsQX9SFHne--n9izXkDjf5VbJjhY',
+    image: 'https://lh3.googleusercontent.com/d/1hWg_28EpOIUneuEC7-MXv43zkDRUGCQl',
     url: 'https://inklink83.itch.io/dragys-island',
     description: "Explorez une île mystérieuse remplie de défis et de secrets dans ce jeu d'aventure captivant. Un projet réalisé avec passion par inklink83."
   },
@@ -26,7 +26,7 @@ const GAMES: Game[] = [
     id: '2', 
     name: 'Level Desert', 
     developer: 'db83', 
-    image: 'https://lh3.googleusercontent.com/d/1hWg_28EpOIUneuEC7-MXv43zkDRUGCQl',
+    image: 'https://lh3.googleusercontent.com/d/1CDYxGsQX9SFHne--n9izXkDjf5VbJjhY',
     url: 'https://db83.itch.io/level-desert',
     description: "Survivez dans un désert impitoyable où chaque dune cache un nouveau danger. Testez vos limites dans ce jeu de survie intense par db83."
   },
@@ -204,7 +204,15 @@ const App: React.FC = () => {
       
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 md:px-8 py-6 mix-blend-difference">
-        <div className="font-heading text-xl md:text-2xl font-bold tracking-tighter text-white cursor-default z-50">MODE83</div>
+        <div className="flex items-center gap-3 z-50">
+          <img 
+            src="https://lh3.googleusercontent.com/d/1AjdM_2CVU0laEZ0pENx_ar0SQpMqMm49" 
+            alt="MODE83 Logo" 
+            className="h-10 md:h-12 w-auto object-contain brightness-0 invert"
+            referrerPolicy="no-referrer"
+          />
+          <div className="font-heading text-xl md:text-2xl font-bold tracking-tighter text-white cursor-default">MODE83</div>
+        </div>
         
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-10 text-sm font-bold tracking-widest uppercase">
@@ -470,7 +478,7 @@ const App: React.FC = () => {
             </div>
             <div className="flex items-center gap-4 grayscale hover:grayscale-0 transition-all">
               <img 
-                src="https://lh3.googleusercontent.com/d/1JpVlTXMg8d2IwQzvKe_CIM4qAENw8duw" 
+                src="https://lh3.googleusercontent.com/d/1fVnQGVDX0_WhFn8woFm7T9aoTmCKtFhu" 
                 alt="Région Sud" 
                 className="h-12 md:h-16 w-auto object-contain"
                 referrerPolicy="no-referrer"
