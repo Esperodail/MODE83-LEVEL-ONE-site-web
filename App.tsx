@@ -12,13 +12,18 @@ import GradientText from './components/GlitchText';
 import CustomCursor from './components/CustomCursor';
 import { Game, Video } from './types';
 
+// Assets
+import dragysImg from './assets/dragys.png';
+import desertImg from './assets/desert.png';
+import clinicImg from './assets/clinic.png';
+
 // Data
 const GAMES: Game[] = [
   { 
     id: '1', 
     name: "Dragys's Island", 
     developer: 'inklink83', 
-    image: 'input_file_1.png',
+    image: dragysImg,
     url: 'https://inklink83.itch.io/dragys-island',
     description: "Explorez une île mystérieuse remplie de défis et de secrets dans ce jeu d'aventure captivant. Un projet réalisé avec passion par inklink83."
   },
@@ -26,7 +31,7 @@ const GAMES: Game[] = [
     id: '2', 
     name: 'Level Desert', 
     developer: 'db83', 
-    image: 'input_file_2.png',
+    image: desertImg,
     url: 'https://db83.itch.io/level-desert',
     description: "Survivez dans un désert impitoyable où chaque dune cache un nouveau danger. Testez vos limites dans ce jeu de survie intense par db83."
   },
@@ -34,7 +39,7 @@ const GAMES: Game[] = [
     id: '3', 
     name: 'Clinic Chaos', 
     developer: 'esperodail', 
-    image: 'input_file_0.png',
+    image: clinicImg,
     url: 'https://esperodail.itch.io/clinic-chaos',
     description: "Gérez le chaos d'une clinique pas comme les autres dans ce jeu de simulation déjanté. Un défi de gestion unique créé par esperodail."
   },
@@ -208,10 +213,10 @@ const App: React.FC = () => {
         
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-10 text-sm font-bold tracking-widest uppercase">
-          {['Jeux', 'Vidéos', 'Formation CDUI'].map((item) => (
+          {['Jeux', 'Vidéos', 'Formation'].map((item) => (
             <button 
               key={item} 
-              onClick={() => scrollToSection(item.split(' ')[0].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))}
+              onClick={() => scrollToSection(item.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))}
               className="hover:text-[#a8fbd3] transition-colors text-white cursor-pointer bg-transparent border-none"
               data-hover="true"
             >
@@ -245,10 +250,10 @@ const App: React.FC = () => {
             exit={{ opacity: 0, y: -20 }}
             className="fixed inset-0 z-30 bg-[#31326f]/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 md:hidden"
           >
-            {['Jeux', 'Vidéos', 'Formation CDUI'].map((item) => (
+            {['Jeux', 'Vidéos', 'Formation'].map((item) => (
               <button
                 key={item}
-                onClick={() => scrollToSection(item.split(' ')[0].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))}
+                onClick={() => scrollToSection(item.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))}
                 className="text-4xl font-heading font-bold text-white hover:text-[#a8fbd3] transition-colors uppercase bg-transparent border-none"
               >
                 {item}
@@ -353,7 +358,7 @@ const App: React.FC = () => {
                   src={game.image} 
                   alt={game.name} 
                   referrerPolicy="no-referrer"
-                  className="h-full w-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-90 transition-all duration-500"
+                  className="h-full w-full object-cover group-hover:scale-105 transition-all duration-700"
                 />
                 <div className="absolute inset-0 p-8 flex flex-col justify-end bg-gradient-to-t from-black/80 to-transparent">
                   <h3 className="text-3xl font-heading font-bold uppercase">{game.name}</h3>
@@ -385,7 +390,7 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 md:mb-24">
             <h2 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold mb-6 uppercase leading-tight">
-              FORMATION LEVEL ONE <br/> <span className="text-[#a8fbd3]">CDUI</span>
+              FORMATION <br/> <span className="text-[#a8fbd3]">LEVEL ONE</span>
             </h2>
             <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
               Concepteur Développeur d'Applications Web et Mobile. Une formation complète pour maîtriser l'ensemble de la chaîne de production digitale.
@@ -448,7 +453,7 @@ const App: React.FC = () => {
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-black/40 backdrop-blur-sm">
                   <Target className="w-12 h-12 text-[#a8fbd3] mb-4" />
                   <h4 className="text-2xl font-bold mb-2">Objectif Examen</h4>
-                  <p className="text-sm text-gray-300">Préparation intensive au titre professionnel CDUI avec accompagnement personnalisé.</p>
+                  <p className="text-sm text-gray-300">Préparation intensive au titre professionnel avec accompagnement personnalisé.</p>
                 </div>
               </div>
             </div>
