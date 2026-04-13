@@ -13,6 +13,7 @@ export interface Game {
   description: string;
   creator?: string;
   session?: string;
+  date?: string;
   team?: { role: string; name: string }[];
 }
 

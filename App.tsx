@@ -20,6 +20,7 @@ const GAMES: Game[] = [
     developer: 'inklink83', 
     creator: 'Justin Bezert',
     session: 'FIF LEVEL ONE - 1ère Session',
+    date: '27 Septembre 2024',
     image: 'https://lh3.googleusercontent.com/d/1hWg_28EpOIUneuEC7-MXv43zkDRUGCQl',
     url: 'https://inklink83.itch.io/dragys-island',
     description: "Passionné par l'univers de The Legend of Zelda, Justin a élaboré un véritable petit monde basé sur son imaginaire. Le jeu se termine sur une énigme spécifiquement conçue pour les joueurs DYS, faisant de ce projet une expérience inclusive dédiée aux personnes ayant des troubles dys."
@@ -30,6 +31,7 @@ const GAMES: Game[] = [
     developer: 'db83', 
     creator: 'Djimmy Boutaghane',
     session: 'FIF LEVEL ONE - 1ère Session',
+    date: '17 Septembre 2024',
     image: 'https://lh3.googleusercontent.com/d/1CDYxGsQX9SFHne--n9izXkDjf5VbJjhY',
     url: 'https://db83.itch.io/level-desert',
     description: "Ce projet met en œuvre les compétences d'exploration du joueur dans un environnement désertique hostile. Le jeu intègre des mécaniques innovantes comme des sables mouvants générant des vibrations sur mobile. La coordination requise en fait un excellent outil pour les personnes ayant des troubles dys."
@@ -40,6 +42,7 @@ const GAMES: Game[] = [
     developer: 'esperodail', 
     creator: 'Équipe FIF LEVEL ONE',
     session: 'FIF LEVEL ONE - 2ème Session',
+    date: '23 Avril 2025',
     team: [
       { role: 'Direction', name: 'J. Catena' },
       { role: 'Conception 3D', name: 'Tiphaine Martin' },
@@ -397,7 +400,10 @@ const App: React.FC = () => {
                 />
                 <div className="absolute inset-0 p-8 flex flex-col justify-end bg-gradient-to-t from-black/80 to-transparent">
                   <h3 className="text-3xl font-heading font-bold uppercase">{game.name}</h3>
-                  <p className="text-[#a8fbd3] font-mono text-sm uppercase tracking-widest">{game.developer}</p>
+                  <div className="flex justify-between items-end">
+                    <p className="text-[#a8fbd3] font-mono text-sm uppercase tracking-widest">{game.developer}</p>
+                    {game.date && <p className="text-gray-400 font-mono text-[10px] uppercase">{game.date}</p>}
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -612,6 +618,12 @@ const App: React.FC = () => {
                       {selectedGame.session && (
                         <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold uppercase tracking-wider text-gray-400">
                           {selectedGame.session}
+                        </span>
+                      )}
+                      {selectedGame.date && (
+                        <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold uppercase tracking-wider text-gray-400 flex items-center gap-1.5">
+                          <Calendar className="w-3 h-3" />
+                          {selectedGame.date}
                         </span>
                       )}
                     </div>
