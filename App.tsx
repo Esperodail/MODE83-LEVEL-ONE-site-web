@@ -524,14 +524,6 @@ const App: React.FC = () => {
             </div>
             <div className="flex items-center gap-4 grayscale hover:grayscale-0 transition-all">
               <img 
-                src="https://lh3.googleusercontent.com/d/1f0KliWtwc8uKrDXmQrreu6HVdGqVGwNi" 
-                alt="France Travail" 
-                className="h-12 md:h-16 w-auto object-contain"
-                referrerPolicy="no-referrer"
-              />
-            </div>
-            <div className="flex items-center gap-4 grayscale hover:grayscale-0 transition-all">
-              <img 
                 src="https://lh3.googleusercontent.com/d/1N70vknLRrSRuWup2f3VwE2T2kyJQ-C4O" 
                 alt="Union Européenne" 
                 className="h-12 md:h-16 w-auto object-contain"
