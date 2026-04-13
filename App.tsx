@@ -18,25 +18,37 @@ const GAMES: Game[] = [
     id: '1', 
     name: "Dragys's Island", 
     developer: 'inklink83', 
+    creator: 'Justin Bezert',
+    session: 'FIF LEVEL ONE - 1ère Session',
     image: 'https://lh3.googleusercontent.com/d/1hWg_28EpOIUneuEC7-MXv43zkDRUGCQl',
     url: 'https://inklink83.itch.io/dragys-island',
-    description: "Explorez une île mystérieuse remplie de défis et de secrets dans ce jeu d'aventure captivant. Un projet réalisé avec passion par inklink83."
+    description: "Passionné par l'univers de The Legend of Zelda, Justin a élaboré un véritable petit monde basé sur son imaginaire. Le jeu se termine sur une énigme spécifiquement conçue pour les joueurs DYS, faisant de ce projet une expérience inclusive dédiée aux personnes ayant des troubles dys."
   },
   { 
     id: '2', 
     name: 'Level Desert', 
     developer: 'db83', 
+    creator: 'Djimmy Boutaghane',
+    session: 'FIF LEVEL ONE - 1ère Session',
     image: 'https://lh3.googleusercontent.com/d/1CDYxGsQX9SFHne--n9izXkDjf5VbJjhY',
     url: 'https://db83.itch.io/level-desert',
-    description: "Survivez dans un désert impitoyable où chaque dune cache un nouveau danger. Testez vos limites dans ce jeu de survie intense par db83."
+    description: "Ce projet met en œuvre les compétences d'exploration du joueur dans un environnement désertique hostile. Le jeu intègre des mécaniques innovantes comme des sables mouvants générant des vibrations sur mobile. La coordination requise en fait un excellent outil pour les personnes ayant des troubles dys."
   },
   { 
     id: '3', 
     name: 'Clinic Chaos', 
     developer: 'esperodail', 
+    creator: 'Équipe FIF LEVEL ONE',
+    session: 'FIF LEVEL ONE - 2ème Session',
+    team: [
+      { role: 'Direction', name: 'J. Catena' },
+      { role: 'Conception 3D', name: 'Tiphaine Martin' },
+      { role: 'Sprites', name: 'Lucas Vizzari' },
+      { role: 'Programmation Unity', name: 'Olivier Frebourg' }
+    ],
     image: 'https://lh3.googleusercontent.com/d/1o0Ozl9oKIday8OgTK0wOW9LBXfWANNW-',
     url: 'https://esperodail.itch.io/clinic-chaos',
-    description: "Gérez le chaos d'une clinique pas comme les autres dans ce jeu de simulation déjanté. Un défi de gestion unique créé par esperodail."
+    description: "L'aboutissement de plusieurs semaines de travail intensif. Inspiré par Overcooked, ce jeu propose une déclinaison E-santé unique. Un travail d'équipe coordonné où chaque membre a apporté son expertise, de la modélisation 3D au scripting Unity complexe."
   },
 ];
 
@@ -568,24 +580,56 @@ const App: React.FC = () => {
                 </div>
                 <button onClick={() => setSelectedGame(null)} className="p-2 hover:bg-white/10 rounded-full transition-colors"><X /></button>
               </div>
-              <div className="p-8 md:p-12 flex flex-col md:flex-row gap-12 items-center">
-                <div className="w-full md:w-1/2 aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-lg">
-                  <img src={selectedGame.image} alt={selectedGame.name} referrerPolicy="no-referrer" className="w-full h-full object-cover" />
+              <div className="p-8 md:p-12 flex flex-col md:flex-row gap-12 items-start">
+                <div className="w-full md:w-1/2 space-y-6">
+                  <div className="aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-lg">
+                    <img src={selectedGame.image} alt={selectedGame.name} referrerPolicy="no-referrer" className="w-full h-full object-cover" />
+                  </div>
+                  
+                  {selectedGame.team && (
+                    <div className="p-6 rounded-2xl bg-white/5 border border-white/10 space-y-4">
+                      <h4 className="text-sm font-bold uppercase tracking-widest text-[#a8fbd3]">L'Équipe du projet</h4>
+                      <div className="grid grid-cols-1 gap-3">
+                        {selectedGame.team.map((member, idx) => (
+                          <div key={idx} className="flex justify-between items-center text-sm border-b border-white/5 pb-2 last:border-0">
+                            <span className="text-gray-400">{member.role}</span>
+                            <span className="font-bold text-white">{member.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
+
                 <div className="w-full md:w-1/2 space-y-8">
-                  <p className="text-lg text-gray-300 leading-relaxed">
-                    {selectedGame.description}
-                  </p>
-                  <div className="flex flex-col gap-4">
+                  <div className="space-y-4">
+                    <div className="flex flex-wrap gap-3">
+                      {selectedGame.creator && (
+                        <span className="px-3 py-1 rounded-full bg-[#4fb7b3]/20 border border-[#4fb7b3]/30 text-[10px] font-bold uppercase tracking-wider text-[#a8fbd3]">
+                          Par {selectedGame.creator}
+                        </span>
+                      )}
+                      {selectedGame.session && (
+                        <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                          {selectedGame.session}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-lg text-gray-300 leading-relaxed font-light">
+                      {selectedGame.description}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col gap-4 pt-4">
                     <button 
                       onClick={() => window.open(selectedGame.url, '_blank')}
-                      className="w-full py-5 bg-[#a8fbd3] text-black font-bold rounded-2xl hover:bg-white transition-all flex items-center justify-center gap-3 group"
+                      className="w-full py-5 bg-[#a8fbd3] text-black font-bold rounded-2xl hover:bg-white transition-all flex items-center justify-center gap-3 group shadow-[0_0_20px_rgba(168,251,211,0.3)]"
                     >
-                      JOUER SUR ITCH.IO
+                      DÉCOUVRIR LE JEU SUR ITCH.IO
                       <ExternalLink className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                     </button>
-                    <p className="text-center text-xs text-gray-500 italic">
-                      Note: L'intégration directe est désactivée pour assurer une meilleure performance.
+                    <p className="text-center text-[10px] text-gray-500 uppercase tracking-widest opacity-60">
+                      Hébergé sur la plateforme Itch.io
                     </p>
                   </div>
                 </div>

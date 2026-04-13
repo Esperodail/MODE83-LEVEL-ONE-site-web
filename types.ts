@@ -11,6 +11,9 @@ export interface Game {
   image: string;
   url: string;
   description: string;
+  creator?: string;
+  session?: string;
+  team?: { role: string; name: string }[];
 }
 
 export interface Video {
