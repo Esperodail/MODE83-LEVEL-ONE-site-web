@@ -6,7 +6,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Ticket, Globe, Zap, Music, MapPin, Menu, X, Calendar, Play, ChevronLeft, ChevronRight, ExternalLink, BookOpen, Target, Clock, Award, CheckCircle2 } from 'lucide-react';
+import { Ticket, Globe, Zap, Music, MapPin, Menu, X, Calendar, Play, ChevronLeft, ChevronRight, ExternalLink, BookOpen, Target, Clock, Award, CheckCircle2, ArrowUp } from 'lucide-react';
 import FluidBackground from './components/FluidBackground';
 import GradientText from './components/GlitchText';
 import CustomCursor from './components/CustomCursor';
@@ -187,12 +187,20 @@ const VideoCard: React.FC<{ video: Video; onSelect: (v: Video) => void }> = ({ v
 };
 
 const App: React.FC = () => {
-  const { scrollYProgress } = useScroll();
+  const { scrollYProgress, scrollY } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = scrollY.on('change', (latest) => {
+      setShowScrollTop(latest > 500);
+    });
+    return () => unsubscribe();
+  }, [scrollY]);
   
   // Handle keyboard navigation for game modal
   useEffect(() => {
@@ -347,7 +355,7 @@ const App: React.FC = () => {
             transition={{ delay: 0.8, duration: 1 }}
             className="text-base md:text-2xl font-light max-w-2xl mx-auto text-white/90 leading-relaxed drop-shadow-lg px-4"
           >
-            Découvrez les réalisations des étudiants de la formation MODE83.
+            Découvrez les réalisations des apprenants issus des 3 sessions de la formation FIF LEVEL ONE.
           </motion.p>
         </motion.div>
 
@@ -434,7 +442,7 @@ const App: React.FC = () => {
               FORMATION <br/> <span className="text-[#a8fbd3]">LEVEL ONE</span>
             </h2>
             <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              Concepteur Développeur d'Applications Web et Mobile. Une formation complète pour maîtriser l'ensemble de la chaîne de production digitale.
+              Concepteur Développeur d'Applications Web et Mobile. Une formation intensive répartie sur 3 sessions pour maîtriser l'ensemble de la chaîne de production digitale.
             </p>
           </div>
 
@@ -669,6 +677,23 @@ const App: React.FC = () => {
               />
             </motion.div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Back to Top Button */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.5, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.5, y: 20 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="fixed bottom-8 right-8 z-50 p-4 rounded-full bg-[#a8fbd3] text-black shadow-[0_0_20px_rgba(168,251,211,0.4)] hover:bg-white transition-colors group"
+            data-hover="true"
+            title="Retour en haut"
+          >
+            <ArrowUp className="w-6 h-6 group-hover:-translate-y-1 transition-transform" />
+          </motion.button>
         )}
       </AnimatePresence>
     </div>
